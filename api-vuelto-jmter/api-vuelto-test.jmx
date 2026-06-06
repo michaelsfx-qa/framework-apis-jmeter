@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="api-vuelto">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">0</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">3</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:\Users\edgar\Documentos\framework-apis-jmter\api-vuelto-jmter\api-vuelto-variables.csv</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">merchantId,secretKey,destinationId,destinationMobile,originMobile</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
+          <stringProp name="HTTPSampler.domain">apimbu.mercantilbanco.com</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">/mercantil-banco/sandbox/v1/payment/c2p</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;merchant_identify&quot;: {&#xd;
+    &quot;integratorId&quot;: &quot;31&quot;,&#xd;
+    &quot;merchantId&quot;: &quot;${merchantId}&quot;,&#xd;
+    &quot;terminalId&quot;: &quot;abcde&quot;&#xd;
+  },&#xd;
+  &quot;client_identify&quot;: {&#xd;
+    &quot;ipaddress&quot;: &quot;127.0.0.1&quot;,&#xd;
+    &quot;browser_agent&quot;: &quot;&quot;,&#xd;
+    &quot;mobile&quot;: {&#xd;
+      &quot;manufacturer&quot;: &quot;&quot;,&#xd;
+      &quot;model&quot;: &quot;&quot;,&#xd;
+      &quot;os_version&quot;: &quot;&quot;,&#xd;
+      &quot;location&quot;: {&#xd;
+        &quot;lat&quot;: 0,&#xd;
+        &quot;lng&quot;: 0&#xd;
+      }&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;transaction_c2p&quot;: {&#xd;
+    &quot;amount&quot;: 10,&#xd;
+    &quot;currency&quot;: &quot;ves&quot;,&#xd;
+    &quot;destination_bank_id&quot;: &quot;105&quot;,&#xd;
+    &quot;destination_id&quot;: &quot;${encryptedDestinationId}&quot;,&#xd;
+    &quot;destination_mobile_number&quot;: &quot;${encryptedDestinationMobile}&quot;,&#xd;
+    &quot;payment_reference&quot;: &quot;&quot;,&#xd;
+    &quot;origin_mobile_number&quot;: &quot;${encryptedOriginMobile}&quot;,&#xd;
+    &quot;trx_type&quot;: &quot;vuelto&quot;,&#xd;
+    &quot;payment_method&quot;: &quot;p2p&quot;,&#xd;
+    &quot;invoice_number&quot;: &quot;${invoiceNumber}&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+import java.security.MessageDigest
+
+// ── Función de encriptado AES-128-ECB ──
+def encrypt(String message, String key) {
+    def digest = MessageDigest.getInstance(&quot;SHA-256&quot;)
+    digest.update(key.bytes)
+    def fullHash = digest.digest().encodeHex().toString()
+    def firstHalf = fullHash.substring(0, (int)(fullHash.length() / 2))
+    def keyBytes = firstHalf.decodeHex()
+
+    def cipher = Cipher.getInstance(&quot;AES/ECB/PKCS5Padding&quot;)
+    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyBytes, &quot;AES&quot;))
+    def encrypted = cipher.doFinal(message.bytes)
+    return encrypted.encodeBase64().toString()
+}
+
+// ── Leer variables del CSV ──
+def secretKey      = vars.get(&quot;secretKey&quot;)
+def destinationId  = vars.get(&quot;destinationId&quot;)
+def destMobile     = vars.get(&quot;destinationMobile&quot;)
+def originMobile   = vars.get(&quot;originMobile&quot;)
+
+// ── Encriptar campos ──
+vars.put(&quot;encryptedDestinationId&quot;,     encrypt(destinationId, secretKey))
+vars.put(&quot;encryptedDestinationMobile&quot;, encrypt(destMobile, secretKey))
+vars.put(&quot;encryptedOriginMobile&quot;,      encrypt(originMobile, secretKey))
+
+// ── Generar invoice_number aleatorio de 10 dígitos ──
+def invoice = String.format(&quot;%010d&quot;, new Random().nextInt(1000000000))
+vars.put(&quot;invoiceNumber&quot;, invoice)</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-IBM-Client-Id</stringProp>
+                <stringProp name="Header.value">9860e0f2-ed46-495e-a25f-ef377ea645f6</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
