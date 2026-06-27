@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.5">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <stringProp name="TestPlan.comments"></stringProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="api-vuelto" enabled="true">
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="csv variables" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">C:/Users/C611125/Documents/framework-apis-jmeter/api-vuelto/api-vuelto-variables.csv</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">testId,merchantId,secretKey,destinationId,destinationMobile,originMobile</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;merchant_identify&quot;: {&#xd;
+    &quot;integratorId&quot;: &quot;31&quot;,&#xd;
+    &quot;merchantId&quot;: &quot;${merchantId}&quot;,&#xd;
+    &quot;terminalId&quot;: &quot;abcde&quot;&#xd;
+  },&#xd;
+  &quot;client_identify&quot;: {&#xd;
+    &quot;ipaddress&quot;: &quot;127.0.0.1&quot;,&#xd;
+    &quot;browser_agent&quot;: &quot;&quot;,&#xd;
+    &quot;mobile&quot;: {&#xd;
+      &quot;manufacturer&quot;: &quot;&quot;,&#xd;
+      &quot;model&quot;: &quot;&quot;,&#xd;
+      &quot;os_version&quot;: &quot;&quot;,&#xd;
+      &quot;location&quot;: {&#xd;
+        &quot;lat&quot;: 0,&#xd;
+        &quot;lng&quot;: 0&#xd;
+      }&#xd;
+    }&#xd;
+  },&#xd;
+  &quot;transaction_c2p&quot;: {&#xd;
+    &quot;amount&quot;: 10,&#xd;
+    &quot;currency&quot;: &quot;ves&quot;,&#xd;
+    &quot;destination_bank_id&quot;: &quot;105&quot;,&#xd;
+    &quot;destination_id&quot;: &quot;${encryptedDestinationId}&quot;,&#xd;
+    &quot;destination_mobile_number&quot;: &quot;${encryptedDestinationMobile}&quot;,&#xd;
+    &quot;payment_reference&quot;: &quot;&quot;,&#xd;
+    &quot;origin_mobile_number&quot;: &quot;${encryptedOriginMobile}&quot;,&#xd;
+    &quot;trx_type&quot;: &quot;vuelto&quot;,&#xd;
+    &quot;payment_method&quot;: &quot;p2p&quot;,&#xd;
+    &quot;invoice_number&quot;: &quot;${invoiceNumber}&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">10.7.0.123</stringProp>
+          <stringProp name="HTTPSampler.port">5002</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">/payment/c2p</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+import java.security.MessageDigest
+
+// ── Limpiar al inicio de la primera iteración ──
+if (ctx.getThreadNum() == 0 &amp;&amp; vars.getIteration() == 1) {
+    props.remove(&quot;pdfGenerated&quot;)
+    props.remove(&quot;allResults&quot;)
+}
+
+// ── Función de encriptado AES-128-ECB ──
+def encrypt(String message, String key) {
+    def digest = MessageDigest.getInstance(&quot;SHA-256&quot;)
+    digest.update(key.bytes)
+    def fullHash = digest.digest().encodeHex().toString()
+    def firstHalf = fullHash.substring(0, (int)(fullHash.length() / 2))
+    def keyBytes = firstHalf.decodeHex()
+
+    def cipher = Cipher.getInstance(&quot;AES/ECB/PKCS5Padding&quot;)
+    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyBytes, &quot;AES&quot;))
+    def encrypted = cipher.doFinal(message.bytes)
+    return encrypted.encodeBase64().toString()
+}
+
+// ── Leer variables del CSV ──
+def testId        = vars.get(&quot;testId&quot;)
+def merchantId    = vars.get(&quot;merchantId&quot;)
+def secretKey     = vars.get(&quot;secretKey&quot;)
+def destinationId = vars.get(&quot;destinationId&quot;)
+def destMobile    = vars.get(&quot;destinationMobile&quot;)
+def originMobile  = vars.get(&quot;originMobile&quot;)
+
+// ── Encriptar campos ──
+def encDestinationId     = encrypt(destinationId, secretKey)
+def encDestinationMobile = encrypt(destMobile, secretKey)
+def encOriginMobile      = encrypt(originMobile, secretKey)
+
+vars.put(&quot;encryptedDestinationId&quot;,     encDestinationId)
+vars.put(&quot;encryptedDestinationMobile&quot;, encDestinationMobile)
+vars.put(&quot;encryptedOriginMobile&quot;,      encOriginMobile)
+
+// ── Generar invoice_number aleatorio de 10 dígitos ──
+def invoice = String.format(&quot;%010d&quot;, new Random().nextInt(1000000000))
+vars.put(&quot;invoiceNumber&quot;, invoice)
+
+// ── Validar que no hay datos vacíos o mezclados ──
+def allOk = testId != null &amp;&amp; merchantId != null &amp;&amp; secretKey != null &amp;&amp;
+            destinationId != null &amp;&amp; destMobile != null &amp;&amp; originMobile != null &amp;&amp;
+            !testId.isEmpty() &amp;&amp; !merchantId.isEmpty() &amp;&amp; !secretKey.isEmpty() &amp;&amp;
+            !destinationId.isEmpty() &amp;&amp; !destMobile.isEmpty() &amp;&amp; !originMobile.isEmpty()
+
+vars.put(&quot;dataValidation&quot;, allOk ? &quot;OK&quot; : &quot;ERROR&quot;)
+
+// ── Capturar el REQUEST para el PDF ──
+def requestBody = &quot;&quot;&quot;{
+  &quot;merchant_identify&quot;: {
+    &quot;integratorId&quot;: &quot;31&quot;,
+    &quot;merchantId&quot;: &quot;${merchantId}&quot;,
+    &quot;terminalId&quot;: &quot;abcde&quot;
+  },
+  &quot;client_identify&quot;: {
+    &quot;ipaddress&quot;: &quot;127.0.0.1&quot;,
+    &quot;browser_agent&quot;: &quot;&quot;,
+    &quot;mobile&quot;: {
+      &quot;manufacturer&quot;: &quot;&quot;,
+      &quot;model&quot;: &quot;&quot;,
+      &quot;os_version&quot;: &quot;&quot;,
+      &quot;location&quot;: { &quot;lat&quot;: 0, &quot;lng&quot;: 0 }
+    }
+  },
+  &quot;transaction_c2p&quot;: {
+    &quot;amount&quot;: 10,
+    &quot;currency&quot;: &quot;ves&quot;,
+    &quot;destination_bank_id&quot;: &quot;105&quot;,
+    &quot;destination_id&quot;: &quot;${encDestinationId}&quot;,
+    &quot;destination_mobile_number&quot;: &quot;${encDestinationMobile}&quot;,
+    &quot;payment_reference&quot;: &quot;&quot;,
+    &quot;origin_mobile_number&quot;: &quot;${encOriginMobile}&quot;,
+    &quot;trx_type&quot;: &quot;vuelto&quot;,
+    &quot;payment_method&quot;: &quot;p2p&quot;,
+    &quot;invoice_number&quot;: &quot;${invoice}&quot;
+  }
+}&quot;&quot;&quot;
+
+vars.put(&quot;requestBody&quot;, requestBody)
+
+log.info(&quot;PreProcessor OK - testId: ${testId} | merchantId: ${merchantId} | dataValidation: ${vars.get(&apos;dataValidation&apos;)}&quot;)</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-IBM-Client-Id</stringProp>
+                <stringProp name="Header.value">9860e0f2-ed46-495e-a25f-ef377ea645f6</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">// ── Capturar el RESPONSE y HTTP Status Code ──
+def responseCode   = prev.getResponseCode()
+def responseBody   = prev.getResponseDataAsString()
+def testId         = vars.get(&quot;testId&quot;)
+def dataValidation = vars.get(&quot;dataValidation&quot;)
+
+// ── Determinar estado ──
+def isHttpSuccess = responseCode != null &amp;&amp; responseCode.startsWith(&quot;2&quot;)
+def isDataOk      = dataValidation == &quot;OK&quot;
+def status        = (isHttpSuccess &amp;&amp; isDataOk) ? &quot;EXITOSO&quot; : &quot;FALLIDO&quot;
+
+// ── Guardar en variables ──
+vars.put(&quot;responseCode&quot;, responseCode)
+vars.put(&quot;responseBody&quot;, responseBody)
+vars.put(&quot;testStatus&quot;,   status)
+
+// ── Guardar datos en lista compartida ──
+def threadData = [
+    testId        : testId,
+    endpoint      : &quot;POST http://10.7.0.123:5002/payment/payment/c2p&quot;,
+    requestBody   : vars.get(&quot;requestBody&quot;),
+    responseCode  : responseCode,
+    responseBody  : responseBody,
+    dataValidation: dataValidation,
+    status        : status
+]
+
+synchronized(props) {
+    def allResults = props.get(&quot;allResults&quot;)
+    if (allResults == null) {
+        allResults = []
+        props.put(&quot;allResults&quot;, allResults)
+    }
+    allResults.add(threadData)
+}
+
+log.info(&quot;PostProcessor OK - testId: ${testId} | HTTP: ${responseCode} | Estado: ${status}&quot;)</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="results" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </PostThreadGroup>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import com.lowagie.text.*
+import com.lowagie.text.pdf.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+// ── Obtener todos los resultados acumulados ──
+def allResults = props.get(&quot;allResults&quot;)
+if (allResults == null || allResults.isEmpty()) {
+    log.info(&quot;No hay resultados para generar PDF&quot;)
+    return
+}
+
+// ── Contar exitosos y fallidos ──
+def totalExitosos = allResults.count { it.status == &quot;EXITOSO&quot; }
+def totalFallidos = allResults.count { it.status == &quot;FALLIDO&quot; }
+
+// ── Configurar PDF ──
+def fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd_HH-mm-ss&quot;))
+def pdfPath = &quot;C:/Users/C611125/Documents/framework-apis-jmeter/api-vuelto/evidencia-${fecha}.pdf&quot;
+
+def document = new Document(PageSize.A4, 36, 36, 36, 36)
+PdfWriter.getInstance(document, new FileOutputStream(pdfPath))
+document.open()
+
+// ── Fuentes ──
+def fontTitulo        = new Font(Font.HELVETICA, 22, Font.BOLD)
+def fontSubtitulo     = new Font(Font.HELVETICA, 13, Font.BOLD)
+def fontNormal        = new Font(Font.HELVETICA, 10, Font.NORMAL)
+def fontSmall         = new Font(Font.HELVETICA, 7, Font.NORMAL)
+def fontCode          = new Font(Font.COURIER, 6, Font.NORMAL)
+def fontExitoso       = new Font(Font.HELVETICA, 8, Font.BOLD, new java.awt.Color(0, 128, 0))
+def fontFallido       = new Font(Font.HELVETICA, 8, Font.BOLD, new java.awt.Color(255, 0, 0))
+def fontExitosoGrande = new Font(Font.HELVETICA, 13, Font.BOLD, new java.awt.Color(0, 128, 0))
+def fontFallidoGrande = new Font(Font.HELVETICA, 13, Font.BOLD, new java.awt.Color(255, 0, 0))
+def fontGris          = new Font(Font.HELVETICA, 10, Font.NORMAL, new java.awt.Color(100, 100, 100))
+
+// ── PORTADA ──
+(1..8).each { document.add(new Paragraph(&quot; &quot;)) }
+
+def titlePara = new Paragraph(&quot;REPORTE DE PRUEBAS DE CONCURRENCIA&quot;, fontTitulo)
+titlePara.setAlignment(Element.ALIGN_CENTER)
+document.add(titlePara)
+
+document.add(new Paragraph(&quot; &quot;))
+
+def subtitlePara = new Paragraph(&quot;API Vuelto (C2P)&quot;, fontSubtitulo)
+subtitlePara.setAlignment(Element.ALIGN_CENTER)
+document.add(subtitlePara)
+
+document.add(new Paragraph(&quot; &quot;))
+document.add(new Paragraph(&quot; &quot;))
+
+def lineaPara = new Paragraph(&quot;─────────────────────────────────────────────────────────────&quot;, fontSmall)
+lineaPara.setAlignment(Element.ALIGN_CENTER)
+document.add(lineaPara)
+
+document.add(new Paragraph(&quot; &quot;))
+
+def fechaLegible = LocalDateTime.now().format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;))
+def fechaPara = new Paragraph(&quot;Fecha de ejecucion: ${fechaLegible}&quot;, fontNormal)
+fechaPara.setAlignment(Element.ALIGN_CENTER)
+document.add(fechaPara)
+
+document.add(new Paragraph(&quot; &quot;))
+
+def totalPara = new Paragraph(&quot;Total de casos ejecutados: ${allResults.size()}&quot;, fontNormal)
+totalPara.setAlignment(Element.ALIGN_CENTER)
+document.add(totalPara)
+
+document.add(new Paragraph(&quot; &quot;))
+
+def exitPara = new Paragraph(&quot;Exitosos: ${totalExitosos}&quot;, fontExitosoGrande)
+exitPara.setAlignment(Element.ALIGN_CENTER)
+document.add(exitPara)
+
+def failPara = new Paragraph(&quot;Fallidos: ${totalFallidos}&quot;, fontFallidoGrande)
+failPara.setAlignment(Element.ALIGN_CENTER)
+document.add(failPara)
+
+document.add(new Paragraph(&quot; &quot;))
+document.add(lineaPara)
+
+document.add(new Paragraph(&quot; &quot;))
+def endpointPara = new Paragraph(&quot;Endpoint: POST http://10.7.0.123:5002/payment/c2p&quot;, fontGris)
+endpointPara.setAlignment(Element.ALIGN_CENTER)
+document.add(endpointPara)
+
+// ── Una hoja por cada caso ──
+allResults.eachWithIndex { result, index -&gt;
+
+    document.add(Chunk.NEXTPAGE)
+
+    document.add(new Paragraph(&quot;─────────────────────────────────────────────────────────────&quot;, fontSmall))
+    document.add(new Paragraph(&quot;Caso: ${result.testId}&quot;, new Font(Font.HELVETICA, 8, Font.BOLD)))
+    document.add(new Paragraph(&quot;Endpoint: ${result.endpoint}&quot;, fontSmall))
+    document.add(new Paragraph(&quot; &quot;))
+
+    document.add(new Paragraph(&quot;REQUEST:&quot;, new Font(Font.HELVETICA, 8, Font.BOLD)))
+    document.add(new Paragraph(result.requestBody, fontCode))
+    document.add(new Paragraph(&quot; &quot;))
+
+    document.add(new Paragraph(&quot;RESPONSE:&quot;, new Font(Font.HELVETICA, 8, Font.BOLD)))
+    document.add(new Paragraph(&quot;HTTP Status: ${result.responseCode}&quot;, fontSmall))
+    document.add(new Paragraph(result.responseBody, fontCode))
+    document.add(new Paragraph(&quot; &quot;))
+
+    def validacionTexto = result.dataValidation == &quot;OK&quot; ? &quot;OK - Sin mezcla de datos&quot; : &quot;ERROR - Datos vacios o mezclados&quot;
+    document.add(new Paragraph(&quot;Validacion de datos: ${validacionTexto}&quot;, fontSmall))
+
+    def estadoFont  = result.status == &quot;EXITOSO&quot; ? fontExitoso : fontFallido
+    def estadoTexto = result.status == &quot;EXITOSO&quot; ? &quot;EXITOSO&quot; : &quot;FALLIDO&quot;
+    document.add(new Paragraph(&quot;Estado: ${estadoTexto}&quot;, estadoFont))
+    document.add(new Paragraph(&quot;─────────────────────────────────────────────────────────────&quot;, fontSmall))
+}
+
+document.close()
+
+// ── Limpiar para proxima ejecucion ──
+props.remove(&quot;allResults&quot;)
+props.remove(&quot;pdfGenerated&quot;)
+
+log.info(&quot;PDF generado con ${allResults.size()} casos: ${pdfPath}&quot;)</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
